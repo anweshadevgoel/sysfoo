@@ -1,31 +1,27 @@
 pipeline {
-
   agent any
+  stages {
+    stage('build') {
+      steps {
+        sh 'mvn compile'
+      }
+    }
 
-  tools {
-  //name of the tool configured on Jenkins
-   maven 'Maven 3.6.3'
+    stage('test') {
+      steps {
+        sh 'mvn clean test'
+      }
+    }
+
+    stage('package') {
+      steps {
+        sh 'mvn package -DskipTests'
+        archiveArtifacts 'target/*.war'
+      }
+    }
+
   }
-  
-  stages{
-    stage('build'){
-      steps {
-      //to get the syntax, you can use pipeline syntax: shell script
-       sh 'mvn compile'
-      }
-    } 
-    
-    stage('test'){
-      steps {
-      sh 'mvn clean test'
-      }
-    } 
-    
-    stage('package'){
-      steps {
-      sh 'mvn package -DskipTests'
-      }
-    } 
-    
+  tools {
+    maven 'Maven 3.6.3'
   }
 }
