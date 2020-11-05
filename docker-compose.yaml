@@ -4,4 +4,4 @@ services:
   sysfoo:
     image: anweshadev/sysfoo:latest
     ports:
-      - 8888:8080
+      - 8888:8080  
